@@ -1,6 +1,6 @@
 {
   "name": "squix-ai",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "An intelligent AI agent that connects to your SQL database, understands natural language, and provides data-driven insights.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rishik92/squix-ai.git"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [
     "ai",
@@ -35,8 +38,7 @@
   },
   "homepage": "https://github.com/rishik92/squix-ai#readme",
   "dependencies": {
-    "@google/generative-ai": "^0.7.1",
-    "@prisma/client": "^5.13.0"
+    "@google/generative-ai": "^0.7.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
@@ -44,6 +46,7 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "prisma": ">=5.0.0"
+    "prisma": ">=5.0.0",
+    "@prisma/client": ">=5.0.0"
   }
 }
