@@ -28,26 +28,31 @@ The library is particularly well-suited for educational platforms, analytics das
 ## Key Features
 
 ### Natural Language Processing
+
 - Intent classification to route queries appropriately
 - Context-aware response generation
 - Conversational follow-up handling
 
 ### Multi-Model Architecture
+
 - Dedicated models for classification, SQL generation, coaching, and general chat
 - Optimized model selection for different task types
 - Configurable model assignments
 
 ### Database Support
+
 - PostgreSQL and MySQL compatibility
 - Automatic schema introspection
 - Dialect-aware SQL generation
 
 ### Security
+
 - SQL injection prevention with multi-layer validation
 - Read-only query enforcement
 - Dangerous operation detection and blocking
 
 ### Intelligent Analysis
+
 - Data interpretation with actionable insights
 - Personalized coaching recommendations
 - Strategic advice based on query results
@@ -55,15 +60,19 @@ The library is particularly well-suited for educational platforms, analytics das
 ## Why Use Squix AI
 
 ### For Educational Platforms
+
 Transform raw student performance data into personalized coaching insights without requiring SQL knowledge from educators or students.
 
 ### For Analytics Applications
+
 Enable business users to query databases conversationally, reducing dependency on data teams for routine reporting.
 
 ### For Customer Support Tools
+
 Provide support agents with instant access to customer data through natural language queries, improving response times.
 
 ### For Internal Dashboards
+
 Allow non-technical stakeholders to explore data independently, fostering data-driven decision-making across organizations.
 
 ### Key Advantages
@@ -98,6 +107,7 @@ npx squix-ai
 ```
 
 This interactive command will:
+
 - Create a `prisma/schema.prisma` file if needed
 - Set up your `.env` file with required variables
 - Guide you through database selection
@@ -120,13 +130,13 @@ npx prisma generate
 ### 4. Basic Implementation
 
 ```typescript
-import { Squix } from 'squix-ai';
+import { Squix } from "squix-ai";
 
 const agent = new Squix();
 
-await agent.connect('postgresql', process.env.DATABASE_URL);
+await agent.connect("postgresql", process.env.DATABASE_URL);
 
-const response = await agent.chat('How many users registered this month?');
+const response = await agent.chat("How many users registered this month?");
 console.log(response);
 ```
 
@@ -149,18 +159,20 @@ interface SquixOptions {
 ### Connection Methods
 
 **Using Connection String**:
+
 ```typescript
-await agent.connect('postgresql', 'postgresql://user:pass@host:5432/db');
+await agent.connect("postgresql", "postgresql://user:pass@host:5432/db");
 ```
 
 **Using Connection Parameters**:
+
 ```typescript
-await agent.connect('mysql', {
-  host: 'localhost',
+await agent.connect("mysql", {
+  host: "localhost",
   port: 3306,
-  user: 'root',
-  password: 'password',
-  database: 'myapp'
+  user: "root",
+  password: "password",
+  database: "myapp",
 });
 ```
 
@@ -187,6 +199,7 @@ Squix AI automatically categorizes user queries into four types:
 ### Schema Introspection
 
 The library automatically introspects your database schema on connection, including:
+
 - Table structures
 - Column types and constraints
 - Foreign key relationships
@@ -203,17 +216,19 @@ This schema information is cached and used to generate accurate SQL queries.
 Creates a new Squix AI agent instance.
 
 **Parameters**:
+
 - `options.models`: Custom Gemini model names
 - `options.defaultSystemPrompt`: Custom persona for the AI coach
 
 **Example**:
+
 ```typescript
 const agent = new Squix({
   models: {
-    sql: 'gemini-2.5-pro',
-    coach: 'gemini-2.5-pro'
+    sql: "gemini-2.5-pro",
+    coach: "gemini-2.5-pro",
   },
-  defaultSystemPrompt: 'You are a financial advisor AI...'
+  defaultSystemPrompt: "You are a financial advisor AI...",
 });
 ```
 
@@ -222,6 +237,7 @@ const agent = new Squix({
 Establishes database connection and introspects schema.
 
 **Parameters**:
+
 - `provider`: `'postgresql'` or `'mysql'`
 - `connection`: Connection string or ConnectionParams object
 
@@ -232,6 +248,7 @@ Establishes database connection and introspects schema.
 Processes user query and returns natural language response.
 
 **Parameters**:
+
 - `userPrompt`: User's natural language question
 - `options.systemPrompt`: Override default system prompt for this query
 
@@ -244,27 +261,27 @@ Processes user query and returns natural language response.
 ### Example 1: Educational Analytics
 
 ```typescript
-import { Squix } from 'squix-ai';
+import { Squix } from "squix-ai";
 
 const agent = new Squix({
   defaultSystemPrompt: `You are an academic advisor helping students 
     understand their performance. Be encouraging and provide specific 
-    study recommendations.`
+    study recommendations.`,
 });
 
-await agent.connect('postgresql', process.env.DATABASE_URL);
+await agent.connect("postgresql", process.env.DATABASE_URL);
 
 // Natural language queries
 const response1 = await agent.chat(
-  'What is my average score in mathematics this semester?'
+  "What is my average score in mathematics this semester?"
 );
 
 const response2 = await agent.chat(
-  'Which subjects should I focus on to improve my overall grade?'
+  "Which subjects should I focus on to improve my overall grade?"
 );
 
 const response3 = await agent.chat(
-  'How do I compare to the class average in physics?'
+  "How do I compare to the class average in physics?"
 );
 ```
 
@@ -274,30 +291,30 @@ const response3 = await agent.chat(
 const salesAgent = new Squix({
   defaultSystemPrompt: `You are a business intelligence assistant. 
     Provide data-driven insights with clear recommendations for 
-    revenue optimization.`
+    revenue optimization.`,
 });
 
-await salesAgent.connect('mysql', {
-  host: 'analytics.company.com',
+await salesAgent.connect("mysql", {
+  host: "analytics.company.com",
   port: 3306,
-  user: 'analyst',
+  user: "analyst",
   password: process.env.DB_PASSWORD,
-  database: 'sales_data'
+  database: "sales_data",
 });
 
 // Revenue analysis
 const revenueReport = await salesAgent.chat(
-  'What were our top 5 products by revenue last quarter?'
+  "What were our top 5 products by revenue last quarter?"
 );
 
 // Trend identification
 const trends = await salesAgent.chat(
-  'Are there any concerning trends in customer retention?'
+  "Are there any concerning trends in customer retention?"
 );
 
 // Strategic recommendations
 const strategy = await salesAgent.chat(
-  'Based on recent sales data, which regions should we prioritize?'
+  "Based on recent sales data, which regions should we prioritize?"
 );
 ```
 
@@ -307,23 +324,21 @@ const strategy = await salesAgent.chat(
 const supportAgent = new Squix({
   defaultSystemPrompt: `You are a customer support assistant. 
     Provide accurate account information professionally and suggest 
-    relevant solutions.`
+    relevant solutions.`,
 });
 
-await supportAgent.connect('postgresql', process.env.SUPPORT_DB_URL);
+await supportAgent.connect("postgresql", process.env.SUPPORT_DB_URL);
 
 // Express.js endpoint example
-app.post('/api/support-query', async (req, res) => {
+app.post("/api/support-query", async (req, res) => {
   try {
     const { question, userId } = req.body;
-    
-    const response = await supportAgent.chat(
-      `For user ${userId}: ${question}`
-    );
-    
+
+    const response = await supportAgent.chat(`For user ${userId}: ${question}`);
+
     res.json({ answer: response });
   } catch (error) {
-    res.status(500).json({ error: 'Query processing failed' });
+    res.status(500).json({ error: "Query processing failed" });
   }
 });
 ```
@@ -332,22 +347,22 @@ app.post('/api/support-query', async (req, res) => {
 
 ```typescript
 const agent = new Squix();
-await agent.connect('postgresql', process.env.DATABASE_URL);
+await agent.connect("postgresql", process.env.DATABASE_URL);
 
 // Different contexts with custom prompts
 const technicalAnalysis = await agent.chat(
-  'Analyze the system performance metrics',
+  "Analyze the system performance metrics",
   {
     systemPrompt: `You are a DevOps engineer analyzing system metrics. 
-      Focus on performance bottlenecks and optimization opportunities.`
+      Focus on performance bottlenecks and optimization opportunities.`,
   }
 );
 
 const executiveSummary = await agent.chat(
-  'Summarize user engagement this quarter',
+  "Summarize user engagement this quarter",
   {
     systemPrompt: `You are preparing an executive summary. 
-      Be concise, focus on business impact, and highlight key metrics.`
+      Be concise, focus on business impact, and highlight key metrics.`,
   }
 );
 ```
@@ -356,16 +371,16 @@ const executiveSummary = await agent.chat(
 
 ```typescript
 const agent = new Squix();
-await agent.connect('mysql', process.env.DATABASE_URL);
+await agent.connect("mysql", process.env.DATABASE_URL);
 
 // Ambiguous query
-const response1 = await agent.chat('Show me the data');
-// Returns: "I can definitely help with that! To give you the best 
-// answer, could you please tell me which specific data you'd like 
+const response1 = await agent.chat("Show me the data");
+// Returns: "I can definitely help with that! To give you the best
+// answer, could you please tell me which specific data you'd like
 // to see?"
 
 // Follow-up with clarity
-const response2 = await agent.chat('Show me user registration data');
+const response2 = await agent.chat("Show me user registration data");
 // Returns actual data and insights
 ```
 
@@ -375,31 +390,28 @@ const response2 = await agent.chat('Show me user registration data');
 class MultiDatabaseApp {
   private analyticsAgent: Squix;
   private userAgent: Squix;
-  
+
   async initialize() {
     // Analytics database
     this.analyticsAgent = new Squix({
-      defaultSystemPrompt: 'You are a data analyst...'
+      defaultSystemPrompt: "You are a data analyst...",
     });
     await this.analyticsAgent.connect(
-      'postgresql',
+      "postgresql",
       process.env.ANALYTICS_DB_URL
     );
-    
+
     // User database
     this.userAgent = new Squix({
-      defaultSystemPrompt: 'You are a user support assistant...'
+      defaultSystemPrompt: "You are a user support assistant...",
     });
-    await this.userAgent.connect(
-      'mysql',
-      process.env.USER_DB_URL
-    );
+    await this.userAgent.connect("mysql", process.env.USER_DB_URL);
   }
-  
+
   async getAnalytics(query: string) {
     return await this.analyticsAgent.chat(query);
   }
-  
+
   async getUserInfo(query: string) {
     return await this.userAgent.chat(query);
   }
@@ -415,11 +427,11 @@ Choose specific Gemini models for different tasks:
 ```typescript
 const agent = new Squix({
   models: {
-    classifier: 'gemini-2.0-flash',      // Fast intent detection
-    sql: 'gemini-2.5-flash',             // Accurate SQL generation
-    coach: 'gemini-2.5-pro',             // Deep analysis
-    chat: 'gemini-2.0-flash'             // Conversational responses
-  }
+    classifier: "gemini-2.0-flash", // Fast intent detection
+    sql: "gemini-2.5-flash", // Accurate SQL generation
+    coach: "gemini-2.5-pro", // Deep analysis
+    chat: "gemini-2.0-flash", // Conversational responses
+  },
 });
 ```
 
@@ -443,7 +455,7 @@ const financialAdvisor = new Squix({
     3. Highlight risks and opportunities
     4. Suggest actionable next steps
     
-    Never provide specific investment advice or guarantee returns.`
+    Never provide specific investment advice or guarantee returns.`,
 });
 ```
 
@@ -452,13 +464,13 @@ const financialAdvisor = new Squix({
 Force schema re-introspection after database changes:
 
 ```typescript
-import { getDatabaseSchema } from 'squix-ai/db/introspector';
+import { getDatabaseSchema } from "squix-ai/db/introspector";
 
 // After schema modifications
 const updatedSchema = await getDatabaseSchema(
   prisma,
-  'postgresql',
-  true  // forceRefresh = true
+  "postgresql",
+  true // forceRefresh = true
 );
 ```
 
@@ -467,13 +479,19 @@ const updatedSchema = await getDatabaseSchema(
 ### Query Optimization
 
 **Do**: Ask specific, well-scoped questions
+
 ```typescript
-await agent.chat('What is the average test score for Grade 10 students in Math during Q1 2024?');
+await agent.chat(
+  "What is the average test score for Grade 10 students in Math during Q1 2024?"
+);
 ```
 
 **Avoid**: Overly broad or multi-part questions
+
 ```typescript
-await agent.chat('Tell me everything about all students and their performance and recommendations');
+await agent.chat(
+  "Tell me everything about all students and their performance and recommendations"
+);
 ```
 
 ### Error Handling
@@ -485,10 +503,10 @@ try {
   const response = await agent.chat(userQuery);
   return { success: true, data: response };
 } catch (error) {
-  console.error('Query failed:', error);
-  return { 
-    success: false, 
-    error: 'Unable to process query. Please try rephrasing.' 
+  console.error("Query failed:", error);
+  return {
+    success: false,
+    error: "Unable to process query. Please try rephrasing.",
   };
 }
 ```
@@ -500,17 +518,17 @@ Reuse agent instances rather than creating new connections:
 ```typescript
 // Good: Single instance
 const agent = new Squix();
-await agent.connect('postgresql', dbUrl);
+await agent.connect("postgresql", dbUrl);
 
 app.use((req, res, next) => {
-  req.agent = agent;  // Attach to request
+  req.agent = agent; // Attach to request
   next();
 });
 
 // Avoid: Creating new instances per request
-app.post('/query', async (req, res) => {
-  const agent = new Squix();  // Inefficient
-  await agent.connect('postgresql', dbUrl);
+app.post("/query", async (req, res) => {
+  const agent = new Squix(); // Inefficient
+  await agent.connect("postgresql", dbUrl);
   // ...
 });
 ```
@@ -552,6 +570,7 @@ Squix AI implements multiple security layers:
 ### Additional Recommendations
 
 **Environment Variables**: Never commit credentials to version control
+
 ```bash
 # .gitignore
 .env
@@ -561,6 +580,7 @@ Squix AI implements multiple security layers:
 **API Key Rotation**: Regularly rotate Gemini API keys
 
 **Database Permissions**: Use read-only database users:
+
 ```sql
 -- PostgreSQL example
 CREATE USER squix_reader WITH PASSWORD 'secure_password';
@@ -572,10 +592,11 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO squix_reader;
 **Rate Limiting**: Implement application-level rate limiting for the chat endpoint
 
 **Input Validation**: Validate user input before passing to Squix:
+
 ```typescript
 function sanitizeInput(query: string): string {
   if (query.length > 500) {
-    throw new Error('Query too long');
+    throw new Error("Query too long");
   }
   return query.trim();
 }
@@ -588,15 +609,17 @@ function sanitizeInput(query: string): string {
 **Connection Failures**
 
 Error: "Database not connected"
+
 ```typescript
 // Solution: Ensure connect() is called before chat()
-await agent.connect('postgresql', dbUrl);
-await agent.chat('query');  // Now works
+await agent.connect("postgresql", dbUrl);
+await agent.chat("query"); // Now works
 ```
 
 **SQL Generation Errors**
 
 Error: "Failed to parse SQL JSON from LLM"
+
 ```typescript
 // Solution: Simplify your query or provide more context
 // Instead of: "Show data"
@@ -606,9 +629,10 @@ Error: "Failed to parse SQL JSON from LLM"
 **Missing Environment Variables**
 
 Error: "Missing required connection parameters"
+
 ```typescript
 // Solution: Verify .env file
-console.log(process.env.DATABASE_URL);  // Should not be undefined
+console.log(process.env.DATABASE_URL); // Should not be undefined
 ```
 
 ### Debug Mode
@@ -617,14 +641,14 @@ Enable detailed logging:
 
 ```typescript
 const agent = new Squix();
-await agent.connect('postgresql', dbUrl);
+await agent.connect("postgresql", dbUrl);
 
 // Log classification results
 const originalChat = agent.chat.bind(agent);
-agent.chat = async function(prompt: string, options?: any) {
-  console.log('User Query:', prompt);
+agent.chat = async function (prompt: string, options?: any) {
+  console.log("User Query:", prompt);
   const result = await originalChat(prompt, options);
-  console.log('AI Response:', result);
+  console.log("AI Response:", result);
   return result;
 };
 ```
@@ -632,18 +656,20 @@ agent.chat = async function(prompt: string, options?: any) {
 ### Performance Optimization
 
 **Schema Caching**: The library automatically caches database schema. To force refresh:
+
 ```typescript
-import { getDatabaseSchema } from 'squix-ai/db/introspector';
+import { getDatabaseSchema } from "squix-ai/db/introspector";
 await getDatabaseSchema(prisma, provider, true);
 ```
 
 **Model Selection**: Use faster models for simple queries:
+
 ```typescript
 const agent = new Squix({
   models: {
-    classifier: 'gemini-2.0-flash',  // Faster
-    chat: 'gemini-2.0-flash'         // Faster
-  }
+    classifier: "gemini-2.0-flash", // Faster
+    chat: "gemini-2.0-flash", // Faster
+  },
 });
 ```
 
@@ -664,3 +690,5 @@ For bug reports, feature requests, or contributions, please visit the project re
 ---
 
 **Note**: This library is in active development. API may change between versions. Always refer to the changelog when upgrading.
+
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
